@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
+use App\Services\Auth\Guard;
+use Illuminate\Contracts\Session\Session;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +28,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Auth::extend('web_active', function ($app, $name, array $config) {
+            return new Guard(
+                $name,
+                Auth::createUserProvider($config['provider']),
+                app(Session::class),
+                app(Request::class)
+            );
+        });
     }
 }

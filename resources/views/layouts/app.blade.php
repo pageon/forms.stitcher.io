@@ -74,6 +74,12 @@
             </div>
         </nav>
 
+        @if (flash())
+            <div class="alert alert-{{ flash('type') }}" role="alert">
+                {!! flash('message') !!}
+            </div>
+        @endif
+
         <main class="py-4">
             @yield('content')
         </main>

@@ -11,7 +11,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        $table = new FormTable($user->forms->toArray());
+        $table = new FormTable($user->forms);
 
         return view('home', compact('user', 'table'));
     }

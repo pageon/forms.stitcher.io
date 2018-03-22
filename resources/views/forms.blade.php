@@ -3,7 +3,7 @@
         <tr>
             @foreach($table->getHeaders() as $header)
                 <th>
-                    {{ $header }}
+                    {{ ucfirst($header) }}
                 </th>
             @endforeach
         </tr>

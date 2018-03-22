@@ -34,7 +34,7 @@ class FormsController extends Controller
     {
         $user = Auth::user();
 
-        $table = new FormTable($user->forms->toArray());
+        $table = new FormTable($user->forms);
 
         $format = $request->get('format') ?? 'csv';
 

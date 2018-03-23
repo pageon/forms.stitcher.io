@@ -48,7 +48,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="allowed_site" class="col-sm-4 col-form-label text-md-right">{{ __('Success Page') }}</label>
+                                <label for="allowed_site" class="col-sm-4 col-form-label text-md-right">{{ __('Allowed Website') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="allowed_site"

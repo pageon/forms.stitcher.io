@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Http\Request;
 
 class Handler extends ExceptionHandler
 {
@@ -48,6 +50,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ThrottleRequestsException) {
+            return $this->handleThrottleRedirect($request, $exception);
+        }
+
         return parent::render($request, $exception);
+    }
+
+    private function handleThrottleRedirect(Request $request, ThrottleRequestsException $exception)
+    {
+        /** @var \App\User|null $user */
+        $user = $request->route()->parameter('user');
+
+        if (! $user || ! $user->throttle_redirect_to) {
+            return parent::render($request, $exception);
+        }
+
+        return redirect()->to($user->throttle_redirect_to);
     }
 }

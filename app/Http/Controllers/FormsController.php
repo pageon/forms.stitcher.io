@@ -17,7 +17,9 @@ class FormsController extends Controller
     public function store(StoreForm $request, User $user)
     {
         $data = $request->except([
-            'referer'
+            'referer',
+            'redirect_to',
+            'throttle_redirect_to',
         ]);
 
         Form::create([
@@ -25,9 +27,14 @@ class FormsController extends Controller
             'data' => $data,
         ]);
 
-        if ($redirect = $request->get('referer')) {
+        $redirect = $request->get('redirect_to')
+            ?? $user->redirect_to;
+
+        if ($redirect) {
             return redirect()->to($redirect);
         }
+
+        return null;
     }
 
     public function download(Request $request)

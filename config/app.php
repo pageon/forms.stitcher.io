@@ -211,4 +211,8 @@ return [
 
     ],
 
+    'throttle' => [
+        'tries' => env('THROTTLE_TRIES', 3),
+        'timeout' => env('THROTTLE_TIMEOUT', 1),
+    ],
 ];
